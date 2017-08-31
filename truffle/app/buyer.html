@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Decent Science - Demo w/ Frontend</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script src="./app.js"></script>
+</head>
+<body>
+<h1>Decent Science</h1>
+<h2>Example Dapp</h2>
+
+
+<br>
+<h1>Buy Sensor Data</h1>
+<br><label for="location">Location:</label><input type="text" id="location" placeholder="e.g., Frankfurt"></input>
+<br><label for="fromDate">From Date</label><input type="text" id="fromDate" placeholder="e.g., 2017-09-01"></input>
+<br><label for="toDate">To Date</label><input type="text" id="toDate" placeholder="e.g., 2017-09-01"></input>
+<br><label for="frequency">To Date</label><input type="text" id="frequency" placeholder="e.g., hourly"></input>
+<br><br><button id="send" onclick="App.buy()">Buy</button>
+<br><span id="sensorResult"></span>
+<br>
+<span id="status"></span>
+<br><br>
+<span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>
+</body>
+</html>

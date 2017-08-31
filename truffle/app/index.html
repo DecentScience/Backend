@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Decent Science - Demo w/ Frontend</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <script src="./app.js"></script>
+</head>
+<body>
+  <h1>Decent Science</h1>
+  <h2>Example Dapp</h2>
+
+
+  <br>
+  <h1>Register Sensor</h1>
+  <br><label for="sensorId">SensorId:</label><input type="text" id="sensorId" placeholder="e.g., YFVQGQQXUSP9PMJYGNKHNETXYTVDDAAUZU9DMUOUHMVXGIZOQWQJJS9M9IDYSQQLVBFTVCY9MQWBSVOLCNUONOOLC9"></input>
+  <br><label for="priceValue">Price (in: Ether)</label><input type="text" id="priceValue" placeholder="e.g., 10"></input>
+  <br><label for="location">Location</label><input type="text" id="location" placeholder="e.g., Frankfurt"></input>
+  <br><br><button id="send" onclick="App.register()">Register</button>
+  <br><br>
+  <span id="contractAddress"></span>
+  <br>
+  <span id="status"></span>
+  <br><br>
+  <span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>
+</body>
+</html>
