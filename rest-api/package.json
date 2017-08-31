@@ -1,0 +1,22 @@
+{
+  "name": "hvv-api",
+  "version": "1.0.0",
+  "description": "Simple restful API to query HVV",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Georg Peters",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^7.4.2",
+    "mongoose": "^4.11.7",
+    "morgan": "^1.8.2"
+  }
+}
