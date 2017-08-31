@@ -18,10 +18,6 @@ var board
 var iota
 var messageTrytes
 
-var ip = require('ip')
-var os = require("os");
-var hostname = os.hostname();
-
 var DISPLAY_RGB_ADDR = 0x62;
 var DISPLAY_TEXT_ADDR = 0x3e;
 
@@ -148,51 +144,13 @@ function sendIOTA(sensor, value, cb) {
 
 }
 
-var arr = [];
-function getIOTA() {
-      //console.log("inside interval..");
-      iota.api.findTransactions({addresses: [address]}, function(e, res) {
-        if (e) throw e;
-        //console.log("Result ", res);
-        iota.api.getTransactionsObjects(res, function(e, res) {
-            if (e) throw e;
-            //onsole.log(res);
-            for (var i = 0; i < res.length-1; i++) {
-              if (arr.indexOf(res[i].hash) > -1) {
-                  }
-              else {
-                var result = res[i].signatureMessageFragment;
-                //console.log("data before substring file: ", result);
-                result = result.substring(0, result.indexOf('99'));
-                //console.log("data after substring file: ", result);
-                result = iota.utils.fromTrytes(result);
-                //console.log("dats file: ", result);
-                var data = JSON.parse(result);
-                var json = {
-                "sensorboxID": res[i].address, // Thats the IOTA key
-                "ETHcontract": '0x0ETHADDRESS', // The contract to pay
-                "sensors": {
-                  "name": data.sensors.name,
-                  "value": data.sensors.value,
-                  "timestamp": res[i].timestamp
-                  }
-                }
-                console.log(JSON.stringify(json));
-                arr.push(res[i].hash);
-          }
-        }
-      })
-    })
-    setTimeout(getIOTA, 10000);
-}
-
 function changeLED(text, r, g, b) {
   var i2c1 = i2c.openSync(1); // LED display
   //setText(i2c1,hostname+' \n'+ip.address());
   setRGB(i2c1, r, g, b);
   setText(i2c1, text);
   led.turnOn();
-  sleep.sleep(0.5);
+  sleep.sleep(1);
   setRGB(i2c1, 55, 55, 55);
   setText(i2c1, '');
   led.turnOff();

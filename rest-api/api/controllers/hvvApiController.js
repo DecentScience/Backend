@@ -6,6 +6,33 @@ var iota = new IOTA({
     'provider': 'http://52.58.212.188:14700'
 });
 
+var contains = function(needle) {
+    // Per spec, the way to identify NaN is that it is not equal to itself
+    var findNaN = needle !== needle;
+    var indexOf;
+
+    if(!findNaN && typeof Array.prototype.indexOf === 'function') {
+        indexOf = Array.prototype.indexOf;
+    } else {
+        indexOf = function(needle) {
+            var i = -1, index = -1;
+
+            for(i = 0; i < this.length; i++) {
+                var item = this[i];
+
+                if((findNaN && item !== item) || item === needle) {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        };
+    }
+
+    return indexOf.call(this, needle) > -1;
+};
+
 function makeSeed() {
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ9";
@@ -36,10 +63,17 @@ exports.getData = function(req, cb) {
   var output = [];
   console.log(req.body);
   console.log(typeof req.body);
-  iota.api.findTransactions(req.body, function(e, res) {
+  iota.api.findTransactions(req.body.payload, function(e, res) {
     if (e) throw e;
+    var toProcess = [];
     console.log("Result ", res);
-    iota.api.getTransactionsObjects(res, function(e, res) {
+    for (var i = 0; i < res.length; i++) {
+      if (!contains.call(req.body.processed, res[i]))  {
+        toProcess.push(res[i]);
+      }
+    }
+    console.log(toProcess)
+    iota.api.getTransactionsObjects(toProcess, function(e, res) {
         if (e) throw e;
         console.log("res ", res);
         for (var i = 0; i < res.length; i++) {
