@@ -66,26 +66,26 @@ exports.getData = function(req, cb) {
   iota.api.findTransactions(req.body.payload, function(e, res) {
     if (e) throw e;
     var toProcess = [];
-    console.log("Result ", res);
     for (var i = 0; i < res.length; i++) {
       if (!contains.call(req.body.processed, res[i]))  {
         toProcess.push(res[i]);
       }
     }
-    console.log(toProcess)
+    //console.log(toProcess)
     iota.api.getTransactionsObjects(toProcess, function(e, res) {
         if (e) throw e;
-        console.log("res ", res);
+        //console.log("res ", res);
         for (var i = 0; i < res.length; i++) {
             var result = res[i].signatureMessageFragment;
-            console.log("data before substring file: ", result);
+            //console.log("data before substring file: ", result);
             result = result.substring(0, result.indexOf('99'));
-            console.log("data after substring file: ", result);
+            //console.log("data after substring file: ", result);
             result = iota.utils.fromTrytes(result);
-            console.log("dats file: ", result);
+            //console.log("dats file: ", result);
             var payload = JSON.parse(result);
             var json = {
             "sensorboxID": res[i].address, // Thats the IOTA key
+            "hash": res[i].hash,
             "sensors": {
               "name": payload.sensors.name,
               "data": payload.sensors.data,
@@ -94,10 +94,11 @@ exports.getData = function(req, cb) {
             "geo_lat": payload.geo_lat,
             "geo_lon": payload.geo_lon
             }
-            console.log(JSON.stringify(json));
+            //console.log(JSON.stringify(json));
             output.push(json);
         }
     cb.send(output);
+    console.log("requested data posted..");
     })
 })
 }
